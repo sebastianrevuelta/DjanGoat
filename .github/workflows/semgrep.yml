@@ -13,14 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Generate requirements txt
-        run: |
-            mkdir ssc
-            pip freeze --all | tee ssc/requirements.txt
+        run: pipenv lock
       - name: Upload Requirements File as Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: requirementstxt
-          path: ssc/requirements.txt
+          name: pipfile
+          path: Pipfile.lock
   my_second_job:
     needs: my_first_job
     name: Scan
@@ -34,7 +32,7 @@ jobs:
       - name: Download artifact from previous job
         uses: actions/download-artifact@v3
         with:
-          name: requirementstxt
+          name: pipfile
       - run: |
          ls -la
          semgrep ci --supply-chain --verbose
