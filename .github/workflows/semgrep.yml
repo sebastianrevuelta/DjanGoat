@@ -15,12 +15,12 @@ jobs:
       - name: Generate requirements txt
         run: |
             mkdir ssc
-            pip freeze --all | tee ./ssc/requirements.txt
+            pip freeze --all | tee ssc/requirements.txt
       - name: Upload Requirements File as Artifact
         uses: actions/upload-artifact@v3
         with:
           name: requirementstxt
-          path: ./ssc/requirements.txt
+          path: ssc/requirements.txt
   my_second_job:
     needs: my_first_job
     name: Scan
